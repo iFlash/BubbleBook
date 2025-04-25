@@ -1,4 +1,4 @@
-# BubbleBook Version 2.0
+# BubbleBook Version 2.1
 
 ## Content
 
