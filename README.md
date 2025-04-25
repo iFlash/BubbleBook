@@ -1,5 +1,6 @@
-Content
---------------------
+# BubbleBook Version 2.0
+
+## Content
 
 ### BUBBLE.ST
 Disk image in ST format (to be used with most emulators) with old and new vesion of BubbleBook. Includes source code of version 2.
@@ -12,8 +13,6 @@ The old version of BubbleBook from 1992. Rename to BUBBLE.ACC to use it. NB: Whi
 
 ### SOURCE (FOLDER)
 Source code ready to compile with Pure-C.
-
-# BubbleBook Version 2.0
 
 ## Installation
 
