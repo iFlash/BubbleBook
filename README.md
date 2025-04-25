@@ -1,4 +1,4 @@
-# BubbleBook Version 2.0 (c) 2025 by Armin Hierstetter
+# BubbleBook Version 2.0
 
 ## Installation
 
