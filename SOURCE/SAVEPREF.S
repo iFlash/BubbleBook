@@ -5,7 +5,7 @@
 
 *		SAVEPREF.S
 *
-*		Saves the preferences into BUBBLE.ACC directly at offset 0x3d.
+*		Saves the preferences into BUBBLE.ACC directly at offset 0x3c.
 *		Doing this in assembler saves around 2k in program size.
 *		Why bother? Because we can.
 
