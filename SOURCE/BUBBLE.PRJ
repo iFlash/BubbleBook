@@ -11,7 +11,6 @@ C:\BUBBLE.ACC		; Name of finished accessory
 BUBSTART.O			; startup code
 
 BUBBLE.C			; Main program code
-BUBBLES.C			; Bitmaps for Bubbles
 
 SAVEPREF.O			; save prefs function
 

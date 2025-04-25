@@ -1,23 +1,11 @@
 *
-*    Copyright (c) 1992-2025 by Armin Hierstetter
-*
-*    This file is part of BubbleBook for Atari ST series.
-*
-*    BubbleBook is free software: you can redistribute it and/or modify it under
-*    the terms of the GNU General Public License as published by the Free
-*    Software Foundation, either version 3 of the License, or later.
-*    
-*    BubbleBook is distributed in the hope that it will be useful, but WITHOUT
-*    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-*    FITNESS FOR A PARTICULAR PURPOSE.
-*    
-*    More about the GNU General Public License: http://www.gnu.org/licenses/
-*
+*    Copyright (c) 1992-2025 by Armin Hierstetter**    This file is part of BubbleBook for Atari ST series.
+**    BubbleBook is free software: you can redistribute it and/or modify it under*    the terms of the GNU General Public License as published by the Free*    Software Foundation, either version 3 of the License, or later.*    *    BubbleBook is distributed in the hope that it will be useful, but WITHOUT*    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or*    FITNESS FOR A PARTICULAR PURPOSE.*    *    More about the GNU General Public License: http://www.gnu.org/licenses/*
 
 
 *		SAVEPREF.S
 *
-*		Saves the preferences into BUBBLE.ACC directly at offset 0x3c.
+*		Saves the preferences into BUBBLE.ACC directly at offset 0x3d.
 *		Doing this in assembler saves around 2k in program size.
 *		Why bother? Because we can.
 

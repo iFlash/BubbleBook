@@ -3,10 +3,9 @@
 #include <aes.h>
 #include <vdi.h>
 
-#include "bubbles.h"
 #include "bubble.rsh"
 
-#define BUBBLE_WIDTH	48
+#define BUBBLE_WIDTH	32
 #define BUBBLE_HEIGHT	28
 #define TOGGLES			6
 #define IDLE_IN_MS		150
@@ -64,7 +63,7 @@ void init_bubbles(void) {
 	/* Setup bubble MFDB */
 	bubble.fd_w			= BUBBLE_WIDTH;
 	bubble.fd_h			= BUBBLE_HEIGHT;
-	bubble.fd_wdwidth	= 3;
+	bubble.fd_wdwidth	= 2;
 	bubble.fd_stand		= 0;
 	bubble.fd_nplanes	= 1;
 
@@ -91,28 +90,28 @@ void draw(int handle, int x, int y) {
 		if (y < (BUBBLE_HEIGHT + yres + yres)) {	/* tail top left */
 			pxy[4]=x;
 			pxy[5]=y + BUBBLE_HEIGHT/2 + yres/2;
-			mask	= (void *)bmask_3;
-			bitmap	= (void *)bbitmap_3;
+			mask	= (void *)RSIB3MASK;
+			bitmap	= (void *)RSIB3DATA;
 		}
 		else {										/* tail bottom left */
 			pxy[4]=x+2;
 			pxy[5]=y - BUBBLE_HEIGHT - 4;
-			mask	= (void *)bmask_2;
-			bitmap	= (void *)bbitmap_2;
+			mask	= (void *)RSIB1MASK;
+			bitmap	= (void *)RSIB1DATA;
 		}
 	}
 	/* Cursor near top right corner? */
 	else if (y < (BUBBLE_HEIGHT + yres + yres)) {	/* tail top right */
 		pxy[4]=x - BUBBLE_WIDTH + xres/2;
 		pxy[5]=y + BUBBLE_HEIGHT/2 + yres/2;
-		mask	= (void *)bmask_4;
-		bitmap	= (void *)bbitmap_4;
+		mask	= (void *)RSIB2MASK;
+		bitmap	= (void *)RSIB2DATA;
 	}
 	else {											/* tail bottom right */
 		pxy[4]=x - BUBBLE_WIDTH + xres/2;
 		pxy[5]=y - BUBBLE_HEIGHT - 2;
-		mask	= (void *)bmask_1;
-		bitmap	= (void *)bbitmap_1;
+		mask	= (void *)RSIB0MASK;
+		bitmap	= (void *)RSIB0DATA;
 	}
 
 	pxy[6]=pxy[4] + BUBBLE_WIDTH - 1;
