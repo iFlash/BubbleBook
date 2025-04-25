@@ -1,0 +1,2 @@
+#ifndef BUBBLES_H#define BUBBLES_H
+extern const unsigned short bmask_1[28][3];extern const unsigned short bmask_2[28][3];extern const unsigned short bmask_3[28][3];extern const unsigned short bmask_4[28][3];extern const unsigned short bbitmap_1[28][3];extern const unsigned short bbitmap_2[28][3];extern const unsigned short bbitmap_3[28][3];extern const unsigned short bbitmap_4[28][3];#endif // BUBBLES_H
