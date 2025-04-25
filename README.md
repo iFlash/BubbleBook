@@ -1,5 +1,8 @@
-Content of this disk
+Content
 --------------------
+
+### BUBBLE.ST
+Disk image in ST format (to be used with most emulators) with old and new vesion of BubbleBook. Includes source code of version 2.
 
 ### BUBBLE.ACC
 BubbleBook Version 2.0 accessory. See below to learn how to install and use.
