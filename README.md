@@ -7,8 +7,8 @@ BubbleBook Version 2.0 accessory. See below to learn how to install and use.
 ### BUBBLE.OLD
 The old version of BubbleBook from 1992. Rename to BUBBLE.ACC to use it. NB: While is does not make any sense at all, it is perfectly possible to run both accessories at the same time.
 
-### SOURCE
-Folder with source code ready to compile with Pure-C.
+### REST OF THE FILES
+Source code ready to compile with Pure-C.
 
 # BubbleBook Version 2.0
 
