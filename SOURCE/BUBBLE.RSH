@@ -259,19 +259,19 @@ OBJECT rs_object[] =
   0x0003, 0x0001, 0x000A, 0x0001,
   
   /******** Tree 1 BUBBLES ****************************************************/
-        -1, BUBBLE_TAIL_BR  , BUTTON_TAIL_TL  , G_BOX             ,   /* Object 0  */
+        -1, BUBBLE_TAIL_BR  , BUBBLE_TAIL_TL  , G_BOX             ,   /* Object 0  */
   NONE, OUTLINED, (LONG)0x00020100L,
   0x0000, 0x0000, 0x0019, 0x0004,
   BUBBLE_TAIL_BL  ,       -1,       -1, G_ICON            ,   /* Object 1 BUBBLE_TAIL_BR */
   NONE, NORMAL, (LONG)&rs_iconblk[0],
   0x0001, 0x0001, 0x0006, 0x0602,
-  BUTTON_TAIL_TR  ,       -1,       -1, G_ICON            ,   /* Object 2 BUBBLE_TAIL_BL */
+  BUBBLE_TAIL_TR  ,       -1,       -1, G_ICON            ,   /* Object 2 BUBBLE_TAIL_BL */
   NONE, NORMAL, (LONG)&rs_iconblk[1],
   0x0007, 0x0001, 0x0006, 0x0602,
-  BUTTON_TAIL_TL  ,       -1,       -1, G_ICON            ,   /* Object 3 BUTTON_TAIL_TR */
+  BUBBLE_TAIL_TL  ,       -1,       -1, G_ICON            ,   /* Object 3 BUBBLE_TAIL_TR */
   NONE, NORMAL, (LONG)&rs_iconblk[2],
   0x000D, 0x0001, 0x0006, 0x0602,
-         0,       -1,       -1, G_ICON            ,   /* Object 4 BUTTON_TAIL_TL */
+         0,       -1,       -1, G_ICON            ,   /* Object 4 BUBBLE_TAIL_TL */
   LASTOB, NORMAL, (LONG)&rs_iconblk[3],
   0x0013, 0x0001, 0x0006, 0x0602
 };

@@ -14,5 +14,5 @@
 #define BUBBLES          1   /* Formular/Dialog */
 #define BUBBLE_TAIL_BR   1   /* ICON in Baum BUBBLES */
 #define BUBBLE_TAIL_BL   2   /* ICON in Baum BUBBLES */
-#define BUTTON_TAIL_TR   3   /* ICON in Baum BUBBLES */
-#define BUTTON_TAIL_TL   4   /* ICON in Baum BUBBLES */
+#define BUBBLE_TAIL_TR   3   /* ICON in Baum BUBBLES */
+#define BUBBLE_TAIL_TL   4   /* ICON in Baum BUBBLES */

@@ -1,3 +1,4 @@
+
 /*
     Copyright (c) 1992-2025 by Armin Hierstetter    This file is part of BubbleBook for Atari ST series.    BubbleBook is free software: you can redistribute it and/or modify it under    the terms of the GNU General Public License as published by the Free    Software Foundation, either version 3 of the License, or later.        BubbleBook is distributed in the hope that it will be useful, but WITHOUT    ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or    FITNESS FOR A PARTICULAR PURPOSE.        More about the GNU General Public License: http://www.gnu.org/licenses/*/
 #include <aes.h>
@@ -13,11 +14,10 @@
 
 int save_prefs(void);
 
-extern int _magic, _setting_1, _setting_2;
+extern int _setting_1, _setting_2;
+int xres, yres;
 
-MFDB bubble,screen;
-int pxy[8], xres, yres;
-
+/* Will be set to correct drive in bubstart.s */
 char bubble_pathname[]="X:\BUBBLE.ACC";
 
 void set_button_state(OBJECT* dialog, int state) {
@@ -58,99 +58,21 @@ int get_button_state(OBJECT* dialog) {
 	return state;
 }
 
-void init_bubbles(void) {
-
-	/* Setup bubble MFDB */
-	bubble.fd_w			= BUBBLE_WIDTH;
-	bubble.fd_h			= BUBBLE_HEIGHT;
-	bubble.fd_wdwidth	= 2;
-	bubble.fd_stand		= 0;
-	bubble.fd_nplanes	= 1;
-
-	/* Setup screen MFDB */
-	screen.fd_addr = 0;
-
-	/* Set size of bubble	*/
-	pxy[0] = 0;
-	pxy[1] = 0;
-	pxy[2] = BUBBLE_WIDTH-1;
-	pxy[3] = BUBBLE_HEIGHT-1;
-}
-
-void draw(int handle, int x, int y) {
-
-	int i, color[2];
-	void *mask,*bitmap;
-
-	color[0]=0;
-	color[1]=1;
-
-	/* Cursor near top left corner? */
-	if (x < (BUBBLE_WIDTH)) {
-		if (y < (BUBBLE_HEIGHT + yres + yres)) {	/* tail top left */
-			pxy[4]=x;
-			pxy[5]=y + BUBBLE_HEIGHT/2 + yres/2;
-			mask	= (void *)RSIB3MASK;
-			bitmap	= (void *)RSIB3DATA;
-		}
-		else {										/* tail bottom left */
-			pxy[4]=x+2;
-			pxy[5]=y - BUBBLE_HEIGHT - 4;
-			mask	= (void *)RSIB1MASK;
-			bitmap	= (void *)RSIB1DATA;
-		}
-	}
-	/* Cursor near top right corner? */
-	else if (y < (BUBBLE_HEIGHT + yres + yres)) {	/* tail top right */
-		pxy[4]=x - BUBBLE_WIDTH + xres/2;
-		pxy[5]=y + BUBBLE_HEIGHT/2 + yres/2;
-		mask	= (void *)RSIB2MASK;
-		bitmap	= (void *)RSIB2DATA;
-	}
-	else {											/* tail bottom right */
-		pxy[4]=x - BUBBLE_WIDTH + xres/2;
-		pxy[5]=y - BUBBLE_HEIGHT - 2;
-		mask	= (void *)RSIB0MASK;
-		bitmap	= (void *)RSIB0DATA;
-	}
-
-	pxy[6]=pxy[4] + BUBBLE_WIDTH - 1;
-	pxy[7]=pxy[5] + BUBBLE_HEIGHT - 1;
-
-	form_dial(FMD_START, 0, 0, 0, 0, pxy[4], pxy[5], BUBBLE_WIDTH-1, BUBBLE_HEIGHT-1);
-
-	for (i = 0; i < TOGGLES; i++) {
-		
-		/* copy mask, then bitmap */
-		bubble.fd_addr = mask;
-		vrt_cpyfm(handle, 2, pxy, &bubble, &screen,color);
-
-		bubble.fd_addr = bitmap;
-		vrt_cpyfm(handle, 3, pxy, &bubble, &screen,color);
-
-		evnt_timer(200,0);
-
-		/* invert bckground and foreground color */
-		color[0]=!color[0];
-		color[1]=!color[1];
-	}
-
-	form_dial(FMD_FINISH, 0, 0, 0, 0, pxy[4], pxy[5], BUBBLE_WIDTH-1, BUBBLE_HEIGHT-1);
-}
-
 int main(void) {
 
-	int i, handle, work_out[57], x, y, w, h, msg_buffer[8];
+	int i, x, y, w, h, handle, msg_buffer[8];
 	int mouse_x, mouse_y, mouse_button, kbd_state, dummy;
 
 	OBJECT *dialog;
-	
+	OBJECT *bubbles;
+
 	menu_register(appl_init(), "  BubbleBook");
-	handle = graf_handle(&xres,&yres,&work_out[0],&work_out[1]);
+	handle=graf_handle(&xres,&yres,&dummy, &dummy);
+	(void) handle; 				/* to get rid of compiler warning */
 
-	init_bubbles();
-
-	dialog=rs_object;
+	dialog=&rs_object[0];
+	bubbles=&rs_object[15];
+	
 	for (i = 0; i < 15; i++)
 		rsrc_obfix(dialog,i);
 
@@ -188,8 +110,43 @@ int main(void) {
 		if (events & MU_BUTTON) {
 
 			/* only show if kbd_state matches hotkey settings */
-			if (kbd_state == get_button_state(dialog))
-				draw(handle, mouse_x, mouse_y);
+			if (kbd_state == get_button_state(dialog)) {
+				int offset_x=-BUBBLE_WIDTH;
+				int offset_y=-BUBBLE_HEIGHT;
+				int bubble=BUBBLE_TAIL_BR;
+
+				if (mouse_x<BUBBLE_WIDTH) {
+					offset_x=0;
+
+					if (mouse_y<BUBBLE_HEIGHT + 2 * yres) {
+						offset_y=BUBBLE_HEIGHT-yres/2;
+						offset_x=xres;
+
+						bubble=BUBBLE_TAIL_TL;
+					}
+					else
+						bubble=BUBBLE_TAIL_BL;
+				}
+				else if (mouse_y<BUBBLE_HEIGHT + 2 * yres) {
+					offset_y=BUBBLE_HEIGHT-yres/2;
+					bubble=BUBBLE_TAIL_TR;
+				}
+
+				bubbles[bubble].ob_x=mouse_x+offset_x;
+				bubbles[bubble].ob_y=mouse_y+offset_y;
+
+				wind_update(BEG_UPDATE);
+				form_dial(FMD_START,0,0,0,0,mouse_x+offset_x,mouse_y+offset_y,BUBBLE_WIDTH,BUBBLE_HEIGHT);
+
+				for (i=0;i<TOGGLES;i++) {
+					objc_draw(bubbles,bubble,0,mouse_x+offset_x,mouse_y+offset_y,BUBBLE_WIDTH,BUBBLE_HEIGHT);
+					evnt_timer(IDLE_IN_MS,0);
+					bubbles[bubble].ob_state^=SELECTED;
+				}
+
+				form_dial(FMD_FINISH,0,0,0,0,mouse_x+offset_x, mouse_y+offset_y,BUBBLE_WIDTH,BUBBLE_HEIGHT);
+				wind_update(END_UPDATE);
+			}
 		}
 
 		/* Accessorry opened? */
