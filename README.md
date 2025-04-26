@@ -40,4 +40,9 @@ BubbleBook is free software: you can redistribute it and/or modify it under the 
 
 BubbleBook is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. More about the GNU General Public License: http://www.gnu.org/licenses/
 
+## References
+
+BubbleBook in AtariUpToDate: https://www.atariuptodate.de/de/1861/bubblebook
+Feature about BubbleBook in ST-Magazin (German): https://www.stcarchiv.de/stc2003/03/gbubble
+
 **Suggestions or bug reports?** armin(at)hierstetter.net
