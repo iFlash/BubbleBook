@@ -1,4 +1,4 @@
-<img width="816" alt="Image" src="https://github.com/user-attachments/assets/531fc45b-83ac-458a-99f7-1fb180d88820" />
+![BubbleBook2](https://github.com/user-attachments/assets/3a7ba1c2-2113-4d4d-9543-7b6410416733)
 
 # BubbleBook Version 2.1
 
@@ -24,7 +24,7 @@ Copy BUBBLE.ACC to the root of your boot device.
 
 BubbleBook was initially written for the ST BOOK. Because of the ST Book's insanely bad display, the mouse pointer constantly gets lost when moved.
 
-<img width="326" alt="Image" src="https://github.com/user-attachments/assets/cfaf0b5e-77b5-4445-9b95-dbc5f16265f1" />
+<img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/02eb2d05-283c-4231-92ef-7e92de72bc38" />
 
 BubbleBook helps finding the pointer by showing a blinking speech bubble ("I'm here!") next to the pointer when the right mouse button is pressed. You can define a set of hotkeys (right shift, left shift, alternate, control) that need to be pressed simultaneously to trigger the speech bubble. Users with big screens might find it useful, too, to quickly identify the position of a "lost" mouse pointer.
 
