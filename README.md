@@ -24,6 +24,8 @@ Copy BUBBLE.ACC to the root of your boot device.
 
 BubbleBook was initially written for the ST BOOK. Because of the ST Book's insanely bad display, the mouse pointer constantly gets lost when moved.
 
+<img width="326" alt="Image" src="https://github.com/user-attachments/assets/cfaf0b5e-77b5-4445-9b95-dbc5f16265f1" />
+
 BubbleBook helps finding the pointer by showing a blinking speech bubble ("I'm here!") next to the pointer when the right mouse button is pressed. You can define a set of hotkeys (right shift, left shift, alternate, control) that need to be pressed simultaneously to trigger the speech bubble. Users with big screens might find it useful, too, to quickly identify the position of a "lost" mouse pointer.
 
 You can save your settings (on/off status and hotkey) by clicking "SAVE". BubbleBook stores the settings inside the accessory file itself, not a seperate .cfg file.
