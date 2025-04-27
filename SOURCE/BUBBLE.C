@@ -8,54 +8,84 @@
 
 #define BUBBLE_WIDTH	32
 #define BUBBLE_HEIGHT	28
-#define TOGGLES			6
 #define IDLE_IN_MS		150
 #define PREFS_OFFSET	0x3C
 
 int save_prefs(void);
 
-extern int _setting_1, _setting_2;
+extern int _setting_1, _setting_2, _setting_3;
+
 int xres, yres;
 
-/* Will be set to correct drive in bubstart.s */
+/* PATHNAME; will be set to correct drive in bubstart.s */
 char bubble_pathname[]="X:\BUBBLE.ACC";
 
-void set_button_state(OBJECT* dialog, int state) {
+void set_button_states(OBJECT* dialog) {
 	
-	if (state & 1)
+	/* KBD Buttons */
+	if (_setting_1 & 1)
 		dialog[BUTTON_SHIFT_R].ob_state |= SELECTED;
 	else
 		dialog[BUTTON_SHIFT_R].ob_state &= ~SELECTED;
 
-	if (state & 2)
+	if (_setting_1 & 2)
 		dialog[BUTTON_SHIFT_L].ob_state |= SELECTED;
 	else
 		dialog[BUTTON_SHIFT_L].ob_state &= ~SELECTED;
 
-	if (state & 4)
+	if (_setting_1 & 4)
 		dialog[BUTTON_CONTROL].ob_state |= SELECTED;
 	else
 		dialog[BUTTON_CONTROL].ob_state &= ~SELECTED;
 
-	if (state & 8)
+	if (_setting_1 & 8)
 		dialog[BUTTON_ALTERNATE].ob_state |= SELECTED;
 	else
-	dialog[BUTTON_ALTERNATE].ob_state &= ~SELECTED;
+		dialog[BUTTON_ALTERNATE].ob_state &= ~SELECTED;
+
+	/* On/Off status */
+	/* unselect on and off */
+	dialog[BUTTON_ON].ob_state &= ~SELECTED;
+	dialog[BUTTON_OFF].ob_state &= ~SELECTED;
+
+	if (_setting_2==BUTTON_OFF)
+		dialog[BUTTON_OFF].ob_state |= SELECTED;
+	else 
+		dialog[BUTTON_ON].ob_state |= SELECTED;
+
+	/* Blink count */
+	dialog[BLINK_COUNT].ob_spec.tedinfo->te_ptext[0]=_setting_3+48;
 }
 
-int get_button_state(OBJECT* dialog) {
-	int state=0;
+void get_button_states(OBJECT* dialog) {
 
+	/* reset value */
+	_setting_1=0;
+
+	/* KBD Buttons */
 	if (dialog[BUTTON_SHIFT_R].ob_state & SELECTED)
-		state |= 1;
+		_setting_1 |= 1;
 	if (dialog[BUTTON_SHIFT_L].ob_state & SELECTED)
-		state |= 2;
+		_setting_1 |= 2;
 	if (dialog[BUTTON_CONTROL].ob_state & SELECTED)
-		state |= 4;
+		_setting_1 |= 4;
 	if (dialog[BUTTON_ALTERNATE].ob_state & SELECTED)
-		state |= 8;
+		_setting_1 |= 8;
 
-	return state;
+	/* On/Off status */
+	/* unselect on and off */
+	if (dialog[BUTTON_ON].ob_state & SELECTED)
+		_setting_2 = BUTTON_ON;
+	else
+		_setting_2 = BUTTON_OFF;
+
+	/* Blink count */
+	_setting_3=dialog[BLINK_COUNT].ob_spec.tedinfo->te_ptext[0]-48;
+
+	if (_setting_3 < 1 || _setting_3 > 9) {
+		_setting_3 = 1;
+		dialog[BLINK_COUNT].ob_spec.tedinfo->te_ptext[0]=49;
+	}
 }
 
 int main(void) {
@@ -68,22 +98,16 @@ int main(void) {
 
 	menu_register(appl_init(), "  BubbleBook");
 	handle=graf_handle(&xres,&yres,&dummy, &dummy);
-	(void) handle; 				/* to get rid of compiler warning */
 
-	dialog=&rs_object[0];
-	bubbles=&rs_object[15];
+	(void) handle;	/* to get rid of compiler warning */
+
+	dialog=rs_trindex[DIALOG_BUBBLE];
+	bubbles=rs_trindex[BUBBLES];
 	
-	for (i = 0; i < 15; i++)
+	for (i = 0; i < 18; i++)
 		rsrc_obfix(dialog,i);
 
-	/* set buttons in dialog according to setting */
-	set_button_state(dialog, _setting_1);
-
-	/* set on/off button, default is ON  */
-	if (_setting_2 == BUTTON_ON || _setting_2 == BUTTON_OFF)
-		dialog[_setting_2].ob_state |= SELECTED;
-	else
-		dialog[BUTTON_ON].ob_state |= SELECTED;
+	set_button_states(dialog);
 
 	/* Center dialog only once, not every time accessory is opened */
 	form_center(dialog, &x, &y, &w, &h);
@@ -110,7 +134,8 @@ int main(void) {
 		if (events & MU_BUTTON) {
 
 			/* only show if kbd_state matches hotkey settings */
-			if (kbd_state == get_button_state(dialog)) {
+			if (kbd_state == _setting_1) {
+	
 				int offset_x=-BUBBLE_WIDTH;
 				int offset_y=-BUBBLE_HEIGHT;
 				int bubble=BUBBLE_TAIL_BR;
@@ -138,9 +163,13 @@ int main(void) {
 				wind_update(BEG_UPDATE);
 				form_dial(FMD_START,0,0,0,0,mouse_x+offset_x,mouse_y+offset_y,BUBBLE_WIDTH,BUBBLE_HEIGHT);
 
-				for (i=0;i<TOGGLES;i++) {
+				for (i=0;i<_setting_3*2;i++) {
+					/* draw the bubble */
 					objc_draw(bubbles,bubble,0,mouse_x+offset_x,mouse_y+offset_y,BUBBLE_WIDTH,BUBBLE_HEIGHT);
+
 					evnt_timer(IDLE_IN_MS,0);
+
+					/* toggle selected state for bubble to blink */
 					bubbles[bubble].ob_state^=SELECTED;
 				}
 
@@ -154,43 +183,32 @@ int main(void) {
 
 			if (msg_buffer[0]==AC_OPEN) {
 				int exit_object;
-				int state=0, on_off_state=0;
 
 				/* event ack */				
 				msg_buffer[0] = 0;
 
-				/* save state of hotkey settings */
-				state=get_button_state(dialog);
-
-				/* save current on/off status*/
-				if (dialog[BUTTON_ON].ob_state & SELECTED)
-					on_off_state=BUTTON_ON;
-				else
-					on_off_state=BUTTON_OFF;
-
 				wind_update(BEG_UPDATE);
-
 				form_dial(FMD_START, 0, 0, 0, 0, x, y, w, h);
 				form_dial(FMD_GROW, 0, 0, 0, 0, x, y, w, h);
 
-				objc_draw(dialog, 0, 2, x, y, w, h);
+				objc_draw(dialog, 0, 8, x, y, w, h);
 
 				do {
+					/* NOTE: Mask out double click flag bit 15! */
+					exit_object=form_do(dialog,BLINK_COUNT) & 0x7FFF;
 
-					exit_object=form_do(dialog,0) & 0x7FFF;
-
-					/* save prefs */
+					/* save prefs clicked*/
 					if (exit_object == BUTTON_SAVE) {
 
-						/* get state of hotkey settings */
-						_setting_1=get_button_state(dialog);
+						/* get current states */
+						get_button_states(dialog);
+						objc_draw(dialog, BLINK_COUNT, 8, x, y, w, h);
 
-						/* get on/off status*/
-						if (dialog[BUTTON_ON].ob_state & SELECTED)
-							_setting_2=BUTTON_ON;
-						else
-							_setting_2=BUTTON_OFF;
-
+						/* change cancel button to disabled as cancel makes */
+						/* no more sense now that the status has been saved */
+						dialog[BUTTON_CANCEL].ob_state |= DISABLED;
+						objc_draw(dialog, BUTTON_CANCEL, 1, x, y, w, h);
+		
 						/* change button text to "SAVING" */
 						dialog[BUTTON_SAVE].ob_spec.free_string="SAVING";
 						objc_draw(dialog, BUTTON_SAVE, 1, x, y, w, h);
@@ -229,21 +247,16 @@ int main(void) {
 				wind_update(END_UPDATE);
 
 				/* restore state of hot keys if user clicks cancel */
-				if (exit_object == BUTTON_CANCEL) {
-					/* restore saved setting */
-					set_button_state(dialog, state);
+				if (exit_object == BUTTON_CANCEL)
+					set_button_states(dialog);
+				else
+					get_button_states(dialog);
 
-					/* unselect on and off */
-					dialog[BUTTON_ON].ob_state &= ~SELECTED;
-					dialog[BUTTON_OFF].ob_state &= ~SELECTED;
-
-					if (on_off_state==BUTTON_ON)
-						dialog[BUTTON_ON].ob_state |= SELECTED;
-					else 
-						dialog[BUTTON_OFF].ob_state |= SELECTED;
-				}
 				/* unselect exit_object */
 				dialog[exit_object].ob_state &= ~SELECTED;
+
+				/* Enable cancel button again as it might have been disabled */
+				dialog[BUTTON_CANCEL].ob_state &= ~DISABLED;
 			}
 		}
 	}

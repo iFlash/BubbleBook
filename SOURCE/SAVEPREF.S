@@ -13,7 +13,7 @@
 
         .IMPORT _setting_1		; selected special key buttons as a bitfield
         .IMPORT _setting_2		; ID of button (BUTTON_ON / BUTTON_OFF) selected
-        .IMPORT _setting_3		; reserved for future enhancements :-)
+        .IMPORT _setting_3		; number of blinks
 
 		.IMPORT bubble_pathname	; Pathname for bubble.acc; initialized as
 								; X:\BUBBLE.ACC. Correct drive is determined on 

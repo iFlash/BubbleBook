@@ -31,7 +31,6 @@
         .IMPORT _FreeAll
 		.IMPORT bubble_pathname
 
-
 *>>>>>> Data structures <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -166,13 +165,13 @@ _magic:
         .DC.B   'MAGIC_BUBBLE    '
 
 _setting_1:
-        .DC.W   $00
+        .DC.W   $00			; Default for KYBD status
 
 _setting_2:
 		.DC.W	$00
 
 _setting_3:
-		.DC.W	$00
+		.DC.W	$03			; Three times of blinking by deafult
 
 EmpStr:
         .DC.B   $00
