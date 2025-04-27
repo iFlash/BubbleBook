@@ -1,13 +1,13 @@
 <img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/1afe6791-c062-42a7-abdb-2a835c50c52d" />
 
-# BubbleBook Version 2.1
+# BubbleBook Version 2.2
 ## Content
 
 ### BUBBLE.ST
 Disk image in ST format (to be used with most emulators) with old and new vesion of BubbleBook. Includes source code of version 2.
 
 ### BUBBLE.ACC
-BubbleBook Version 2.0 accessory. See below to learn how to install and use.
+BubbleBook Version 2.2 accessory. See below to learn how to install and use.
 
 ### BUBBLE.OLD
 The old version of BubbleBook from 1992. Rename to BUBBLE.ACC to use it. NB: While is does not make any sense at all, it is perfectly possible to run both accessories at the same time.
@@ -25,9 +25,9 @@ BubbleBook was initially written for the ST BOOK. Because of the ST Book's insan
 
 <img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/02eb2d05-283c-4231-92ef-7e92de72bc38" />
 
-BubbleBook helps finding the pointer by showing a blinking speech bubble ("I'm here!") next to the pointer when the right mouse button is pressed. You can define a set of hotkeys (right shift, left shift, alternate, control) that need to be pressed simultaneously to trigger the speech bubble. Users with big screens might find it useful, too, to quickly identify the position of a "lost" mouse pointer.
+BubbleBook helps finding the pointer by showing a blinking speech bubble ("I'm here!") next to the pointer when the right mouse button is pressed. You can define a set of hotkeys (right shift, left shift, alternate, control) that need to be pressed simultaneously to trigger the speech bubble. You can also determine how many times the speech bubble is supposed to blink. Users with big screens might find it useful, too, to quickly identify the position of a "lost" mouse pointer.
 
-You can save your settings (on/off status and hotkey) by clicking "SAVE". BubbleBook stores the settings inside the accessory file itself, not a seperate .cfg file.
+You can save your settings (on/off status, blinking rate, hotkey) by clicking "SAVE". BubbleBook stores the settings inside the accessory file itself, not a seperate .cfg file.
 
 ## Compatibility
 
