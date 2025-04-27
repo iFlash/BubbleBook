@@ -1,5 +1,5 @@
-<img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/1afe6791-c062-42a7-abdb-2a835c50c52d" />
 
+<img width="1728" alt="BubbeBook Main" src="https://github.com/user-attachments/assets/1dba6ad5-5d76-4252-be87-67faa9167e6e" />
 # BubbleBook Version 2.2
 ## Content
 
