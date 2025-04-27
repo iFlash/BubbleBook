@@ -1,4 +1,4 @@
-<img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/60b76825-4d55-40d5-a897-8c6a84877691" />
+<img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/1afe6791-c062-42a7-abdb-2a835c50c52d" />
 
 # BubbleBook Version 2.1
 ## Content
