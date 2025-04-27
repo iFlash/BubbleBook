@@ -94,6 +94,7 @@ int main(void) {
 	int mouse_x, mouse_y, mouse_button, kbd_state, dummy;
 
 	OBJECT *dialog;
+	OBJECT *help;
 	OBJECT *bubbles;
 
 	menu_register(appl_init(), "  BubbleBook");
@@ -102,15 +103,20 @@ int main(void) {
 	(void) handle;	/* to get rid of compiler warning */
 
 	dialog=rs_trindex[DIALOG_BUBBLE];
+	help=rs_trindex[DIALOG_HELP];
 	bubbles=rs_trindex[BUBBLES];
 	
-	for (i = 0; i < 18; i++)
+	for (i = 0; i < 31; i++)
 		rsrc_obfix(dialog,i);
 
 	set_button_states(dialog);
 
-	/* Center dialog only once, not every time accessory is opened */
+	/* Center dialogs only once, not every time accessory is opened */
+	/* Note: As both dialogs have exactly the same size, we can 	*/
+	/* overwrite x, y, w, h without trouble							*/
+
 	form_center(dialog, &x, &y, &w, &h);
+	form_center(help, &x, &y, &w, &h);
 
 	while (1) {
 		int events = MU_TIMER|MU_MESAG;
@@ -187,11 +193,13 @@ int main(void) {
 				/* event ack */				
 				msg_buffer[0] = 0;
 
+				dialog_begin:
+
 				wind_update(BEG_UPDATE);
 				form_dial(FMD_START, 0, 0, 0, 0, x, y, w, h);
 				form_dial(FMD_GROW, 0, 0, 0, 0, x, y, w, h);
 
-				objc_draw(dialog, 0, 8, x, y, w, h);
+				objc_draw(dialog, 0, 3, x, y, w, h);
 
 				do {
 					/* NOTE: Mask out double click flag bit 15! */
@@ -202,7 +210,7 @@ int main(void) {
 
 						/* get current states */
 						get_button_states(dialog);
-						objc_draw(dialog, BLINK_COUNT, 8, x, y, w, h);
+						objc_draw(dialog, BLINK_COUNT, 1, x, y, w, h);
 
 						/* change cancel button to disabled as cancel makes */
 						/* no more sense now that the status has been saved */
@@ -246,17 +254,45 @@ int main(void) {
 
 				wind_update(END_UPDATE);
 
-				/* restore state of hot keys if user clicks cancel */
-				if (exit_object == BUTTON_CANCEL)
-					set_button_states(dialog);
-				else
-					get_button_states(dialog);
-
 				/* unselect exit_object */
 				dialog[exit_object].ob_state &= ~SELECTED;
 
 				/* Enable cancel button again as it might have been disabled */
 				dialog[BUTTON_CANCEL].ob_state &= ~DISABLED;
+
+				/* restore state of hot keys if user clicks cancel */
+				if (exit_object == BUTTON_CANCEL)
+					set_button_states(dialog);
+				else if (exit_object == BUTTON_OK)
+					get_button_states(dialog);
+				/* help was clicked	*/
+				else {
+					int exit_object;
+
+					wind_update(BEG_UPDATE);
+					form_dial(FMD_START, 0, 0, 0, 0, x, y, w, h);
+					form_dial(FMD_GROW, 0, 0, 0, 0, x, y, w, h);
+
+					objc_draw(help, 0, 2, x, y, w, h);
+					exit_object=form_do(help,0) & 0x7FFF;
+
+					form_dial(FMD_SHRINK, 0, 0, 0, 0, x, y, w, h);
+					form_dial(FMD_FINISH, 0, 0, 0, 0, x, y, w, h);
+
+					wind_update(END_UPDATE);
+					help[exit_object].ob_state &= ~SELECTED;
+
+					/* this is the very first time I have used 'goto' in C  */
+					/* in this case, though, I think it is the most         */
+					/* efficient/elegant way to get back from the help      */
+					/* dialog to the main dialog.                           */
+
+					/* of course, you could do a do/while thing or similar, */
+					/* but that felt really odd to do just to avoid 'goto'. */
+					/* So: 'goto' it is!                                    */
+
+					goto dialog_begin;
+				}
 			}
 		}
 	}

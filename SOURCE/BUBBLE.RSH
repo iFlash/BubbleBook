@@ -63,7 +63,47 @@ TEDINFO rs_tedinfo[] =
   " HOTKEY(S) ",
   "\0",
   "\0",
-  SMALL, 0, TE_LEFT , 0x1180, 0, 0, 12, 1
+  SMALL, 0, TE_LEFT , 0x1180, 0, 0, 12, 1,
+  "?",
+  "\0",
+  "\0",
+  SMALL, 0, TE_CNTR , 0x1180, 0, -1, 2, 1,
+  " BubbleBook ",
+  "\0",
+  "\0",
+  IBM  , 0, TE_CNTR , 0x11C1, 0, -1, 13, 1,
+  "VERSION 2.2 (C) 2025 BY ARMIN HIERSTETTER",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, 0, 42, 1,
+  "BUBBLEBOOK DRAWS A SPEECH BUBBLE NEAR A",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, -1, 40, 1,
+  "\042LOST\042 MOUSE CURSOR WHEN YOU CLICK RIGHT.",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, -1, 42, 1,
+  "YOU CAN DEFINE HOTKEYS THAT NEED TO BE",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, -1, 39, 1,
+  "PRESSED THE SAME TIME TO SHOW THE BUBBLE AND ",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, -1, 46, 1,
+  "ADJUST THE NUMBER OF BLINKS OF THE BUBBLE.",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, -1, 43, 1,
+  "FINALLY, YOU CAN SAVE YOUR SETTINGS.",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, -1, 37, 1,
+  " HELP ",
+  "\0",
+  "\0",
+  SMALL, 0, TE_LEFT , 0x1180, 0, 0, 7, 1
 };
 
 WORD RSIB0MASK[] =
@@ -258,20 +298,61 @@ OBJECT rs_object[] =
          9,       -1,       -1, G_BOXTEXT         |0x1500,   /* Object 13 BUTTON_SHIFT_R */
   SELECTABLE, OUTLINED|SHADOWED, (LONG)&rs_tedinfo[7],
   0x001A, 0x0001, 0x0007, 0x0001,
-  BUTTON_SAVE     ,       -1,       -1, G_TEXT            ,   /* Object 14  */
+  BUTTON_HELP     ,       -1,       -1, G_TEXT            ,   /* Object 14  */
   NONE, NORMAL, (LONG)&rs_tedinfo[8],
   0x0003, 0x0807, 0x0208, 0x0001,
-  BUTTON_CANCEL   ,       -1,       -1, G_BUTTON          ,   /* Object 15 BUTTON_SAVE */
+  BUTTON_SAVE     ,       -1,       -1, G_BOXTEXT         ,   /* Object 15 BUTTON_HELP */
+  SELECTABLE|EXIT, NORMAL, (LONG)&rs_tedinfo[9],
+  0x0002, 0x000C, 0x0002, 0x0001,
+  BUTTON_CANCEL   ,       -1,       -1, G_BUTTON          ,   /* Object 16 BUTTON_SAVE */
   SELECTABLE|TOUCHEXIT, NORMAL, (LONG)"SAVE",
-  0x0002, 0x000C, 0x0008, 0x0001,
-  BUTTON_OK       ,       -1,       -1, G_BUTTON          ,   /* Object 16 BUTTON_CANCEL */
+  0x0005, 0x000C, 0x0008, 0x0001,
+  BUTTON_OK       ,       -1,       -1, G_BUTTON          ,   /* Object 17 BUTTON_CANCEL */
   SELECTABLE|EXIT, NORMAL, (LONG)"CANCEL",
   0x0011, 0x000C, 0x0009, 0x0001,
-         0,       -1,       -1, G_BUTTON          ,   /* Object 17 BUTTON_OK */
+         0,       -1,       -1, G_BUTTON          ,   /* Object 18 BUTTON_OK */
   SELECTABLE|DEFAULT|EXIT|LASTOB, NORMAL, (LONG)"OK",
   0x001C, 0x000C, 0x0009, 0x0001,
   
-  /******** Tree 1 BUBBLES ****************************************************/
+  /******** Tree 1 DIALOG_HELP ****************************************************/
+        -1,        1, K               , G_BOX             ,   /* Object 0  */
+  NONE, OUTLINED, (LONG)0x00021100L,
+  0x0000, 0x0000, 0x0027, 0x000E,
+         2,       -1,       -1, G_BOXTEXT         ,   /* Object 1  */
+  NONE, OUTLINED|SHADOWED, (LONG)&rs_tedinfo[10],
+  0x0002, 0x0001, 0x0023, 0x0001,
+  BOX_HELP        ,       -1,       -1, G_TEXT            ,   /* Object 2  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[11],
+  0x0004, 0x0402, 0x061E, 0x0001,
+  TITLE_HELP      ,        4,        9, G_BOX             ,   /* Object 3 BOX_HELP */
+  NONE, NORMAL, (LONG)0x00FF1100L,
+  0x0002, 0x0004, 0x0023, 0x0007,
+         5,       -1,       -1, G_TEXT            ,   /* Object 4  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[12],
+  0x0001, 0x0001, 0x021D, 0x0001,
+         6,       -1,       -1, G_TEXT            ,   /* Object 5  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[13],
+  0x0001, 0x0002, 0x061E, 0x0001,
+         7,       -1,       -1, G_TEXT            ,   /* Object 6  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[14],
+  0x0001, 0x0003, 0x041C, 0x0001,
+         8,       -1,       -1, G_TEXT            ,   /* Object 7  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[15],
+  0x0001, 0x0004, 0x0621, 0x0001,
+         9,       -1,       -1, G_TEXT            ,   /* Object 8  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[16],
+  0x0001, 0x0005, 0x041F, 0x0001,
+  BOX_HELP        ,       -1,       -1, G_TEXT            ,   /* Object 9  */
+  NONE, NORMAL, (LONG)&rs_tedinfo[17],
+  0x0001, 0x0006, 0x001B, 0x0001,
+  K               ,       -1,       -1, G_TEXT            ,   /* Object 10 TITLE_HELP */
+  NONE, NORMAL, (LONG)&rs_tedinfo[18],
+  0x0003, 0x0803, 0x0404, 0x0001,
+         0,       -1,       -1, G_BUTTON          ,   /* Object 11 K */
+  SELECTABLE|DEFAULT|EXIT|LASTOB, NORMAL, (LONG)"BACK",
+  0x001C, 0x000C, 0x0009, 0x0001,
+  
+  /******** Tree 2 BUBBLES ****************************************************/
         -1, BUBBLE_TAIL_BR  , BUBBLE_TAIL_TL  , G_BOX             ,   /* Object 0  */
   NONE, OUTLINED, (LONG)0x00020100L,
   0x0000, 0x0000, 0x0019, 0x0004,
@@ -291,5 +372,6 @@ OBJECT rs_object[] =
 
 OBJECT *rs_trindex[] =
 { &rs_object[0],   /* Tree  0 DIALOG_BUBBLE    */
-  &rs_object[18]    /* Tree  1 BUBBLES          */
+  &rs_object[19],   /* Tree  1 DIALOG_HELP      */
+  &rs_object[31]    /* Tree  2 BUBBLES          */
 };
