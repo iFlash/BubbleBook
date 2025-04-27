@@ -1,7 +1,6 @@
-![BubbleBook2](https://github.com/user-attachments/assets/3a7ba1c2-2113-4d4d-9543-7b6410416733)
+<img width="1728" alt="BubbleBook" src="https://github.com/user-attachments/assets/60b76825-4d55-40d5-a897-8c6a84877691" />
 
 # BubbleBook Version 2.1
-
 ## Content
 
 ### BUBBLE.ST
