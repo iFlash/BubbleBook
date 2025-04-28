@@ -106,18 +106,19 @@ int main(void) {
 	help=rs_trindex[DIALOG_HELP];
 	bubbles=rs_trindex[BUBBLES];
 	
-	for (i = 0; i < 31; i++)
-		rsrc_obfix(dialog,i);
+	/* fix all objects in resource */
+	for (i = 0; i < sizeof(rs_object)/sizeof(rs_object[0]); rsrc_obfix(dialog,i++));
 
+	/* On load, we set the options according to the (saved) settings */
 	set_button_states(dialog);
 
 	/* Center dialogs only once, not every time accessory is opened */
 	/* Note: As both dialogs have exactly the same size, we can 	*/
 	/* overwrite x, y, w, h without trouble							*/
-
 	form_center(dialog, &x, &y, &w, &h);
 	form_center(help, &x, &y, &w, &h);
 
+	/* Accessories never terminate */
 	while (1) {
 		int events = MU_TIMER|MU_MESAG;
 
@@ -126,7 +127,7 @@ int main(void) {
 			events |= MU_BUTTON;
 
 		events = evnt_multi( events,
-					1,0x02,0x02,					/* Mouse Button */
+					1,0x02,0x02,					/* We wait for right click */
 					0,0,0,0,0,						/* Mouse Event1 */
 					0,0,0,0,0,						/* Mouse Event2 */			
 					msg_buffer,						/* Message		*/

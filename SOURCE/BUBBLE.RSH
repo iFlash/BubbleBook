@@ -80,7 +80,7 @@ TEDINFO rs_tedinfo[] =
   "\0",
   "\0",
   SMALL, 0, TE_LEFT , 0x1180, 0, -1, 40, 1,
-  "\042LOST\042 MOUSE CURSOR WHEN YOU CLICK RIGHT.",
+  "\042LOST\042 MOUSE CURSOR WHEN YOU RIGHT-CLICK.",
   "\0",
   "\0",
   SMALL, 0, TE_LEFT , 0x1180, 0, -1, 42, 1,
@@ -243,13 +243,13 @@ WORD RSIB3DATA[] =
 };
 
 ICONBLK rs_iconblk[] =
-{ RSIB0MASK, RSIB0DATA, "ICON\000\000\000\000", 0x1000|'\0',
+{ RSIB0MASK, RSIB0DATA, "\0\000\000\000\000\000\000\000\000", 0x1000|'\0',
     0,   0,   0,   0,  32,  28,   0,  30,  48,   8,
-  RSIB1MASK, RSIB1DATA, "ICON\000\000\000\000", 0x1000|'\0',
+  RSIB1MASK, RSIB1DATA, "\0\000\000\000\000\000\000\000\000", 0x1000|'\0',
     0,   0,   0,   0,  32,  28,   0,  30,  48,   8,
-  RSIB2MASK, RSIB2DATA, "ICON\000\000\000\000", 0x1000|'\0',
+  RSIB2MASK, RSIB2DATA, "\0\000\000\000\000\000\000\000\000", 0x1000|'\0',
     0,   0,   0,   0,  32,  28,   0,  30,  48,   8,
-  RSIB3MASK, RSIB3DATA, "ICON\000\000\000\000", 0x1000|'\0',
+  RSIB3MASK, RSIB3DATA, "\0\000\000\000\000\000\000\000\000", 0x1000|'\0',
     0,   0,   0,   0,  32,  28,   0,  30,  48,   8
 };
 
@@ -355,7 +355,7 @@ OBJECT rs_object[] =
   /******** Tree 2 BUBBLES ****************************************************/
         -1, BUBBLE_TAIL_BR  , BUBBLE_TAIL_TL  , G_BOX             ,   /* Object 0  */
   NONE, OUTLINED, (LONG)0x00020100L,
-  0x0000, 0x0000, 0x0019, 0x0004,
+  0x0000, 0x0000, 0x0019, 0x0603,
   BUBBLE_TAIL_BL  ,       -1,       -1, G_ICON            ,   /* Object 1 BUBBLE_TAIL_BR */
   NONE, NORMAL, (LONG)&rs_iconblk[0],
   0x0001, 0x0001, 0x0006, 0x0602,
